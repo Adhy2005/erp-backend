@@ -16,8 +16,8 @@ load_dotenv()
 from app.routes import projects, sprints, tasks, workspace, finance
 from app.routes import auth, users, clients, attendance
 from webhooks.jibble.router import router as jibble_router
-from webhooks.github.router import router as github_router
-
+from webhooks.github.router import router as github_router, api_webhooks_router
+ 
 API_PREFIX = "/api/v1"
 
 app = FastAPI(
@@ -47,7 +47,8 @@ app.include_router(clients.router,  prefix=API_PREFIX)
 app.include_router(attendance.router, prefix=API_PREFIX)
 app.include_router(jibble_router)
 app.include_router(github_router)
-
+app.include_router(api_webhooks_router, prefix=API_PREFIX)
+ 
 
 @app.get("/")
 def root():
